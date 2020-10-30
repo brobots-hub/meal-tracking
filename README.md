@@ -12,4 +12,4 @@ This a system running on Raspberry Pi that helps to identify what meals each stu
 
 - **Python** as main project language
 - **Google Sheets API** as data storage
-  - I'd personally use **MySQL** for these purposes, but all school data is stored in **Google Sheets API** - @andrewyazura
+  - I'd personally use **MySQL** for these purposes, but all school data is stored in **Google Sheets API** - [@andrewyazura](https://github.com/andrewyazura)
