@@ -3,17 +3,18 @@ from googleapiclient.discovery import build
 
 
 class GoogleSheetsStorage:
-    def __init__(self, service_account_file, scopes):
+    def __init__(self, document_id, service_account, scopes):
         creds = service_account.Credentials.from_service_account_file(
-            service_account_file, scopes=scopes)
+            service_account, scopes=scopes)
 
         service = build('sheets', 'v4', credentials=creds)
         self._sheet = service.spreadsheets()
+        self._document_id = document_id
 
     def get_students(self):
         pass
 
-    def get_student_by_id(self, student_id):
+    def get_student_by_id(self, user_id):
         pass
 
 
