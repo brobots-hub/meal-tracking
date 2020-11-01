@@ -42,3 +42,7 @@ Follow this steps:
 - Find the service account you need.
 - Press _Actions_ button (three dots) and choose `Create key`
 - Choose `JSON` and press `Create`
+
+### Google Sheets document setup
+
+Still working on that...

@@ -51,12 +51,6 @@ class GoogleSheetsStorage:
             environ.get('USER_NAME_ROW'),
         )
 
-    # def _get_meals_range(self, user_row):
-    #     return '{0}{1}'.format(
-    #         environ.get('FIRST_COL'),
-    #         user_row
-    #     )
-
 
 if __name__ == '__main__':
     storage = GoogleSheetsStorage()
