@@ -1,1 +1,1 @@
-from GoogleSheetsStorage.googleSheetsStorage import GoogleSheetsStorage
+from GoogleSheetsStorage.GoogleSheetsStorage import GoogleSheetsStorage

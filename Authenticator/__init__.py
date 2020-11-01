@@ -1,1 +1,0 @@
-from Authenticator.authenticator import Authenticator
