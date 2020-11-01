@@ -1,3 +1,5 @@
+from os import environ
+
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from Request import Request
@@ -15,13 +17,21 @@ class GoogleSheetsStorage:
     def write_meal(self, data: Request):
         pass
 
+    def get_user_by_id(self, user_id):
+        users = self.get_users()
+
+        if users:
+            return users.get(user_id, False)
+
+        return users
+
     def get_users(self):
         first_row = 2  # TODO: move spreadsheets ranges to .env file
 
         users = self._sheet.values()\
-                    .get(spreadsheetId=self._document_id, range=f'A{first_row}:B')\
-                    .execute()\
-                    .get('values', False)
+            .get(spreadsheetId=self._document_id, range=self._get_users_range())\
+            .execute()\
+            .get('values', False)
 
         result = {}
         for i in range(len(users)):
@@ -34,13 +44,18 @@ class GoogleSheetsStorage:
 
         return result if result else False
 
-    def get_user_by_id(self, user_id):
-        users = self.get_users()
+    def _get_users_range(self):
+        return '{0}{1}:{2}'.format(
+            environ.get('FIRST_COL'),
+            environ.get('USER_ID_ROW'),
+            environ.get('USER_NAME_ROW'),
+        )
 
-        if users:
-            return users.get(user_id, False)
-
-        return users
+    # def _get_meals_range(self, user_row):
+    #     return '{0}{1}'.format(
+    #         environ.get('FIRST_COL'),
+    #         user_row
+    #     )
 
 
 if __name__ == '__main__':
