@@ -15,40 +15,42 @@ class GoogleSheetsStorage:
         self._document_id = document_id
 
     def write_meal(self, data: Request):
-        pass
+        users = self.get_users()
+        first_row = int(environ.get('FIRST_ROW'))
+        user_row = None
+
+        i = 0
+        for user in users:
+            if user == data.id:
+                user_row = i + first_row
+                break
+            i += 1
+
+        if user_row == None:
+            return False
 
     def get_user_by_id(self, user_id):
         users = self.get_users()
 
         if users:
-            return users.get(user_id, False)
+            return users.get(str(user_id), False)
 
         return users
 
     def get_users(self):
-        first_row = 2  # TODO: move spreadsheets ranges to .env file
-
         users = self._sheet.values()\
             .get(spreadsheetId=self._document_id, range=self._get_users_range())\
             .execute()\
             .get('values', False)
 
-        result = {}
-        for i in range(len(users)):
-            u_id = str(users[i][0])
-            result[u_id] = Request(
-                user_id=u_id,
-                user_name=users[i][1],
-                user_row=i + first_row
-            )
-
-        return result if result else False
+        result = {user[0]: user[1] for user in users}
+        return result
 
     def _get_users_range(self):
         return '{0}{1}:{2}'.format(
-            environ.get('FIRST_COL'),
-            environ.get('USER_ID_ROW'),
-            environ.get('USER_NAME_ROW'),
+            environ.get('USER_ID_COL'),
+            environ.get('FIRST_ROW'),
+            environ.get('USER_NAME_COL'),
         )
 
 

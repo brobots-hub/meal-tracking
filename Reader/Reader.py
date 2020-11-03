@@ -5,11 +5,11 @@ class Reader():
     def __init__(self):
         pass
 
-    def start(self):
-        self._on_card_near('3')
-
     def set_card_callback(self, callback):
         self._callback = callback
+
+    def start(self):
+        self._on_card_near('3')
 
     def _on_card_near(self, card_id):
         r = Request(user_id=card_id)

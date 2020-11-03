@@ -12,8 +12,9 @@ class Authenticator(BaseHandler):
 
     def handle(self, request):
         result = self._authenticate(request)
+        request.name = result
 
-        super().handle(result)
+        super().handle(request)
 
 
 if __name__ == '__main__':
