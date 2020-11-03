@@ -14,9 +14,9 @@ class GoogleSheetsStorage:
         self._sheet = service.spreadsheets()
         self._document_id = document_id
 
-    def write_meal(self, data: Request):
+    def write_record(self, data: Request):
         users = self.get_users()
-        meals_col = environ.get('MEALS_COL')
+        records_col = environ.get('RECORDS_COL')
         first_row = int(environ.get('FIRST_ROW'))
         user_row = None
 
@@ -31,11 +31,11 @@ class GoogleSheetsStorage:
             return False
 
         result = self._sheet.values()\
-            .get(spreadsheetId=self._document_id, range=self._get_meals_range(user_row))\
+            .get(spreadsheetId=self._document_id, range=self._get_records_range(user_row))\
             .execute()\
             .get('values', [[]])[0]
 
-        write_col = chr(ord(meals_col) + len(result))
+        write_col = chr(ord(records_col) + len(result))
 
         body = {
             'values': [
@@ -74,9 +74,9 @@ class GoogleSheetsStorage:
             environ.get('USER_NAME_COL'),
         )
 
-    def _get_meals_range(self, user_row):
+    def _get_records_range(self, user_row):
         return '{0}{1}:{2}'.format(
-            environ.get('MEALS_COL'),
+            environ.get('RECORDS_COL'),
             user_row,
             5000
         )

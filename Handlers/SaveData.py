@@ -7,7 +7,7 @@ class SaveData(BaseHandler):
         self._storage = storage
 
     def _save_data(self, data):
-        self._storage.write_meal(data)
+        self._storage.write_record(data)
         return data
 
     def handle(self, request):
