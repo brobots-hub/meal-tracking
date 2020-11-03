@@ -16,6 +16,7 @@ class GoogleSheetsStorage:
 
     def write_meal(self, data: Request):
         users = self.get_users()
+        meals_col = environ.get('MEALS_COL')
         first_row = int(environ.get('FIRST_ROW'))
         user_row = None
 
@@ -28,6 +29,26 @@ class GoogleSheetsStorage:
 
         if user_row == None:
             return False
+
+        result = self._sheet.values()\
+            .get(spreadsheetId=self._document_id, range=self._get_meals_range(user_row))\
+            .execute()\
+            .get('values', [[]])[0]
+
+        write_col = chr(ord(meals_col) + len(result))
+
+        body = {
+            'values': [
+                [str(data.date)]
+            ]
+        }
+
+        result = self._sheet.values().update(
+            spreadsheetId=self._document_id,
+            range='{0}{1}'.format(write_col, user_row),
+            valueInputOption='USER_ENTERED',
+            body=body
+        ).execute()
 
     def get_user_by_id(self, user_id):
         users = self.get_users()
@@ -51,6 +72,13 @@ class GoogleSheetsStorage:
             environ.get('USER_ID_COL'),
             environ.get('FIRST_ROW'),
             environ.get('USER_NAME_COL'),
+        )
+
+    def _get_meals_range(self, user_row):
+        return '{0}{1}:{2}'.format(
+            environ.get('MEALS_COL'),
+            user_row,
+            5000
         )
 
 
