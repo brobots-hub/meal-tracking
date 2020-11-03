@@ -15,27 +15,12 @@ class GoogleSheetsStorage:
         self._document_id = document_id
 
     def write_record(self, data: Request):
-        users = self.get_users()
-        records_col = environ.get('RECORDS_COL')
-        first_row = int(environ.get('FIRST_ROW'))
-        user_row = None
-
-        i = 0
-        for user in users:
-            if user == data.id:
-                user_row = i + first_row
-                break
-            i += 1
-
-        if user_row == None:
+        user_row = self._find_user_row(data.id)
+        if not user_row:
             return False
 
-        result = self._sheet.values()\
-            .get(spreadsheetId=self._document_id, range=self._get_records_range(user_row))\
-            .execute()\
-            .get('values', [[]])[0]
-
-        write_col = chr(ord(records_col) + len(result))
+        records_col = environ.get('RECORDS_COL')
+        empty_col = self._get_first_empty_col(records_col, user_row)
 
         body = {
             'values': [
@@ -45,10 +30,37 @@ class GoogleSheetsStorage:
 
         result = self._sheet.values().update(
             spreadsheetId=self._document_id,
-            range='{0}{1}'.format(write_col, user_row),
+            range='{0}{1}'.format(empty_col, user_row),
             valueInputOption='USER_ENTERED',
             body=body
         ).execute()
+
+        return True if result.get('updatedRange', False) else False
+
+    def _find_user_row(self, user_id):
+        users = self.get_users()
+        first_row = int(environ.get('FIRST_ROW'))
+        user_row = None
+
+        i = 0
+        for user in users:
+            if user == user_id:
+                user_row = i + first_row
+                break
+            i += 1
+
+        if user_row == None:
+            return False
+
+        return user_row
+
+    def _get_first_empty_col(self, start_col, row):
+        result = self._sheet.values()\
+            .get(spreadsheetId=self._document_id, range=self._get_records_range(row))\
+            .execute()\
+            .get('values', [[]])[0]
+
+        return chr(ord(start_col) + len(result))
 
     def get_user_by_id(self, user_id):
         users = self.get_users()
