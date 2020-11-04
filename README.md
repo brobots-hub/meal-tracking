@@ -1,6 +1,6 @@
 # #brobots school meal tracking
 
-This is a system running on Raspberry Pi that helps to identify what meals each student has taken. It uses personal RFID tags as user identifiers.
+This is a system running on Raspberry Pi that helps to record at what exact time each student has taken. It uses personal RFID tags as user identifiers.
 
 ## Hardware
 
@@ -45,4 +45,15 @@ Follow this steps:
 
 ### Google Sheets document setup
 
-Still working on that...
+Copy this example: [link](https://docs.google.com/spreadsheets/d/1PVWsVY0DHWhr39p7M89DaQVEtYfha_SqDXLo_IbTrdw/edit?usp=sharing).
+
+If for some reason the link isn't working, here is how table looks:
+
+| IDs | Users |     | Records             |                     |
+| --- | ----- | --- | ------------------- | ------------------- |
+| 1   | user1 | --- | 1970/01/01 00:00:00 |
+| 2   | user2 | --- | 1970/01/01 00:00:00 | 1970/01/01 00:00:00 |
+| 3   | user3 | --- | 1970/01/01 00:00:00 |
+| 4   | user4 | --- | 1970/01/01 00:00:00 |
+
+New records are appended into user's row. Record only has date and time of the request.
