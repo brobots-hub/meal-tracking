@@ -10,7 +10,7 @@ class Reader(rdm6300.BaseReader):
         print(f"card inserted {card}")
 
     def card_removed(self, card):
-        r = Request(user_id=card.value)
+        r = Request(user_id=str(card.value))
         self._callback(r)
         print(f"card removed {card}")
 
