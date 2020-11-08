@@ -17,8 +17,10 @@ idna==2.10                # via requests
 protobuf==3.13.0          # via google-api-core, googleapis-common-protos
 pyasn1-modules==0.2.8     # via google-auth
 pyasn1==0.4.8             # via pyasn1-modules, rsa
+pyserial==3.4             # via rdm6300
 python-dotenv==0.15.0     # via -r requirements.in
 pytz==2020.1              # via google-api-core
+rdm6300==0.1.1            # via -r requirements.in
 requests==2.24.0          # via google-api-core
 rsa==4.6                  # via google-auth
 six==1.15.0               # via google-api-core, google-api-python-client, google-auth, google-auth-httplib2, protobuf
