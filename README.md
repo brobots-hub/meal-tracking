@@ -13,6 +13,7 @@ This is a system running on Raspberry Pi that helps to record at what exact time
 - **Python** as main project language
 - **Google Sheets API** as data storage
   - I'd personally use **MySQL** for these purposes, but all school data is stored in **Google Sheets API** - [@andrewyazura](https://github.com/andrewyazura)
+- **RDM6300** sensor library
 
 ## Setup
 
@@ -51,9 +52,23 @@ If for some reason the link isn't working, here is how table looks:
 
 | IDs | Users |     | Records             |                     |
 | --- | ----- | --- | ------------------- | ------------------- |
-| 1   | user1 | --- | 1970/01/01 00:00:00 |
+| 1   | user1 | --- | 1970/01/01 00:00:00 |                     |
 | 2   | user2 | --- | 1970/01/01 00:00:00 | 1970/01/01 00:00:00 |
-| 3   | user3 | --- | 1970/01/01 00:00:00 |
-| 4   | user4 | --- | 1970/01/01 00:00:00 |
+| 3   | user3 | --- |                     |                     |
+| 4   | user4 | --- | 1970/01/01 00:00:00 |                     |
 
 New records are appended into user's row. Record only has date and time of the request.
+
+## Raspberry Pi setup
+
+If following instructions don't work, try using this tutorial: [link](https://www.circuits.dk/setup-raspberry-pi-3-gpio-uart/).
+
+### Serial
+
+Run `sudo raspi-config`. Select `Interfacing Options / Serial` then disable `Serial console` and enable `Serial hardware`. Now use `/dev/serial0` in any code which accesses the Serial Port.
+
+### UART
+
+You need to enable UART, as it's the way Raspberry Pi and RFID sensor will be connected.
+
+Run `sudo nano /boot/config.txt`. At the end of the file append `enable_uart=1` and reboot.
