@@ -3,9 +3,12 @@ from os import environ
 from common import load_config
 from GoogleSheetsStorage import GoogleSheetsStorage
 from Handlers import Authenticator, SaveData
-from Reader import Reader
+from Reader import Reader, TestReader
 
 load_config()
+
+if environ.get('ENVIRONMENT') == 'DEVELOPMENT':
+    Reader = TestReader
 
 storage = GoogleSheetsStorage(
     environ.get('DOCUMENT_ID'),
