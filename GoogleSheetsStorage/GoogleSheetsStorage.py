@@ -14,8 +14,45 @@ class GoogleSheetsStorage:
         self._sheet = service.spreadsheets()
         self._document_id = document_id
 
+    def write_user_id(self, user_id, user_name):
+        user_row = self._find_user_row_by_name(user_name)
+        ids_col = environ.get('USER_ID_COL')
+
+        body = {
+            'values': [
+                [str(user_id)]
+            ]
+        }
+
+        result = self._sheet.values().update(
+            spreadsheetId=self._document_id,
+            range='{0}{1}'.format(ids_col, user_row),
+            valueInputOption='USER_ENTERED',
+            body=body
+        ).execute()
+
+        return True if result.get('updatedRange', False) else False
+
+    def _find_user_row_by_name(self, user_name):
+        users = self.get_users()
+        first_row = int(environ.get('FIRST_ROW'))
+        user_row = False
+
+        if not users:
+            return user_row
+
+        i = 0
+        for user in users:
+            if user[1] == user_name:
+                user_row = i + first_row
+                break
+            i += 1
+
+        return user_row
+
     def write_record(self, data: Request):
-        user_row = self._find_user_row(data.id)
+        user_row = self._find_user_row_by_id(data.id)
+
         if not user_row:
             return False
 
@@ -37,20 +74,20 @@ class GoogleSheetsStorage:
 
         return True if result.get('updatedRange', False) else False
 
-    def _find_user_row(self, user_id):
+    def _find_user_row_by_id(self, user_id):
         users = self.get_users()
         first_row = int(environ.get('FIRST_ROW'))
-        user_row = None
+        user_row = False
+
+        if not users:
+            return user_row
 
         i = 0
         for user in users:
-            if user == user_id:
+            if user[0] == user_id:
                 user_row = i + first_row
                 break
             i += 1
-
-        if user_row == None:
-            return False
 
         return user_row
 
@@ -65,10 +102,12 @@ class GoogleSheetsStorage:
     def get_user_by_id(self, user_id):
         users = self.get_users()
 
-        if users:
-            return users.get(str(user_id), False)
+        if not users:
+            return False
 
-        return users
+        for user in users:
+            if user[0] == user_id:
+                return user
 
     def get_users(self):
         users = self._sheet.values()\
@@ -76,8 +115,7 @@ class GoogleSheetsStorage:
             .execute()\
             .get('values', False)
 
-        result = {user[0]: user[1] for user in users}
-        return result
+        return users
 
     def _get_users_range(self):
         return '{0}{1}:{2}'.format(

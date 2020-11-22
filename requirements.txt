@@ -4,9 +4,12 @@
 #
 #    pip-compile requirements.in
 #
+blessings==1.7            # via curtsies
 cachetools==4.1.1         # via google-auth
 certifi==2020.6.20        # via requests
 chardet==3.0.4            # via requests
+curtsies==0.3.4           # via enquiries
+enquiries==0.1.0          # via -r requirements.in
 google-api-core==1.23.0   # via google-api-python-client
 google-api-python-client==1.12.5  # via -r requirements.in
 google-auth-httplib2==0.0.4  # via google-api-python-client
@@ -23,9 +26,10 @@ pytz==2020.1              # via google-api-core
 rdm6300==0.1.1            # via -r requirements.in
 requests==2.24.0          # via google-api-core
 rsa==4.6                  # via google-auth
-six==1.15.0               # via google-api-core, google-api-python-client, google-auth, google-auth-httplib2, protobuf
+six==1.15.0               # via blessings, google-api-core, google-api-python-client, google-auth, google-auth-httplib2, protobuf
 uritemplate==3.0.1        # via google-api-python-client
 urllib3==1.25.11          # via requests
+wcwidth==0.2.5            # via curtsies
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
