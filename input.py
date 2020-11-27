@@ -20,7 +20,6 @@ reader = Reader('/dev/serial0')
 user_cli = UserChooser(storage)
 write_id = WriteIDs(storage)
 
-reader.set_delay(5)
 reader.set_card_callback(user_cli.handle)
 user_cli.set_next(write_id)
 

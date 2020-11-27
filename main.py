@@ -20,7 +20,6 @@ reader = Reader('/dev/serial0')
 auth = Authenticator(storage)
 save_data = SaveData(storage)
 
-reader.set_delay(5)
 reader.set_card_callback(auth.handle)
 auth.set_next(save_data)
 
