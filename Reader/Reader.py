@@ -2,22 +2,18 @@ import rdm6300
 from Request import Request
 
 
-class Reader(rdm6300.BaseReader):
+class Reader(rdm6300.Reader):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.quit_loop = False
+
     def set_card_callback(self, callback):
         self._callback = callback
 
-    def card_inserted(self, card):
-        r = Request(user_id=str(card.value))
-        self._callback(r)
-        print(f"card inserted {card}")
-
-    def card_removed(self, card):
-        print(f"card removed {card}")
-        pass
-
-    def invalid_card(self, card):
-        print(f"invalid card {card}")
-        pass
+    def execute(self):
+        while not self.quit_loop:
+            result = self.read()
+            self._callback(result)
 
 
 class TestReader:
@@ -27,21 +23,8 @@ class TestReader:
     def set_card_callback(self, callback):
         self._callback = callback
 
-    def card_inserted(self, card):
-        r = Request(user_id=card)
-        self._callback(r)
-        print(f"card inserted {card}")
-
-    def card_removed(self, card):
-        print(f"card removed {card}")
-        pass
-
-    def invalid_card(self, card):
-        print(f"invalid card {card}")
-        pass
-
-    def start(self):
-        self.card_inserted('1')
+    def execute(self):
+        self._callback('1')
 
 
 if __name__ == '__main__':
