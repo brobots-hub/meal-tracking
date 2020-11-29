@@ -13,7 +13,8 @@ class Reader(rdm6300.Reader):
     def execute(self):
         while not self.quit_loop:
             result = self.read()
-            self._callback(result)
+            request = Request(result.value)
+            self._callback(request)
 
 
 class TestReader:
