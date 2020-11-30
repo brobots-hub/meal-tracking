@@ -27,4 +27,4 @@ reader.set_card_callback(auth.handle)
 auth.set_next(save_data)
 
 if __name__ == '__main__':
-    reader.execute()
+    reader.start()
