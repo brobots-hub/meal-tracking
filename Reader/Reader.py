@@ -24,6 +24,9 @@ class Reader(rdm6300.Reader):
 
 
 class TestReader:
+    def __init__(self, *args, **kwargs):
+        pass
+
     def set_card_callback(self, callback):
         self._callback = callback
 
