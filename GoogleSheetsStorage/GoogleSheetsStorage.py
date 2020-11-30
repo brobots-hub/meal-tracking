@@ -10,7 +10,8 @@ class GoogleSheetsStorage:
         creds = service_account.Credentials.from_service_account_file(
             account_key, scopes=scopes)
 
-        service = build('sheets', 'v4', credentials=creds)
+        service = build('sheets', 'v4', credentials=creds,
+                        cache_discovery=False)
         self._sheet = service.spreadsheets()
         self._document_id = document_id
 
