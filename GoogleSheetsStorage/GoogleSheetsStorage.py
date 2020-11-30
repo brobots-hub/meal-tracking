@@ -54,6 +54,13 @@ class GoogleSheetsStorage:
         return user_row
 
     def write_record(self, data: Request):
+        try:
+            return self._write_record(data)
+        except:
+            logging.critical(
+                'google sheets request error - probably row overflow')
+
+    def _write_record(self, data: Request):
         user_row = self._find_user_row_by_id(data.id)
 
         if not user_row:
