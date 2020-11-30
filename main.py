@@ -7,7 +7,8 @@ from Handlers import Authenticator, SaveData
 from Reader import Reader, TestReader
 
 load_config()
-logging.basicConfig(level=environ.get('LOGLEVEL', 'INFO'))
+logging.basicConfig(filename=environ.get('LOGFILE', 'app.log'),
+                    level=environ.get('LOGLEVEL', 'INFO'))
 
 if environ.get('ENVIRONMENT') == 'DEVELOPMENT':
     Reader = TestReader
