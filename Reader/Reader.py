@@ -4,7 +4,7 @@ import rdm6300
 from Request import Request
 
 
-class Reader(rdm6300.Reader):
+class Reader(rdm6300.BaseReader):
     def set_card_callback(self, callback):
         self._callback = callback
 
