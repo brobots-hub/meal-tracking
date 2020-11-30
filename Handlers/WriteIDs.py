@@ -1,3 +1,5 @@
+import logging
+
 from Handlers.BaseHandler import BaseHandler
 
 
@@ -12,4 +14,5 @@ class WriteIDs(BaseHandler):
 
     def handle(self, request):
         result = self._update_data(request)
+        logging.debug(f'user id updated - {request}')
         super().handle(result)

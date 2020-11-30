@@ -37,7 +37,7 @@ class TestReader:
         print(f"invalid card {card}")
 
     def start(self):
-        self.card_removed('1')
+        self.card_removed('16157103')
 
 
 if __name__ == '__main__':
