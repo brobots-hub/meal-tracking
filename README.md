@@ -1,6 +1,9 @@
 # #brobots school meal tracking
 
-This is a system running on Raspberry Pi that helps to record at what exact time each student has taken. It uses personal RFID tags as user identifiers.
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/brobots-hub/school-meal-tracking?style=flat&logo=github&labelColor=181717&color=F8F8F5)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/brobots-hub/school-meal-tracking?color=brightgreen&logo=git&logoColor=white)
+
+This is a system running on Raspberry Pi that helps to record at what exact time each student has taken his meal. It uses personal RFID tags as user identifiers.
 
 ## Hardware
 
