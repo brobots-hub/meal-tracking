@@ -7,17 +7,15 @@ class Reader(rdm6300.BaseReader):
         self._callback = callback
 
     def card_inserted(self, card):
-        r = Request(user_id=str(card.value))
-        self._callback(r)
         print(f"card inserted {card}")
 
     def card_removed(self, card):
         print(f"card removed {card}")
-        pass
+        r = Request(user_id=str(card.value))
+        self._callback(r)
 
     def invalid_card(self, card):
         print(f"invalid card {card}")
-        pass
 
 
 class TestReader:
@@ -34,11 +32,9 @@ class TestReader:
 
     def card_removed(self, card):
         print(f"card removed {card}")
-        pass
 
     def invalid_card(self, card):
         print(f"invalid card {card}")
-        pass
 
     def start(self):
         self.card_inserted('1')
