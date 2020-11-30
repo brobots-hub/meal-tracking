@@ -61,17 +61,11 @@ New records are appended into user's row. Record only has date and time of the r
 
 ## Raspberry Pi setup
 
-If following instructions don't work, try using this tutorial: [link](https://www.circuits.dk/setup-raspberry-pi-3-gpio-uart/).
-
-### Serial
+### Serial / UART
 
 Run `sudo raspi-config`. Select `Interfacing Options / Serial` then disable `Serial console` and enable `Serial hardware`. Now use `/dev/serial0` in any code which accesses the Serial Port.
 
-### UART
-
-You need to enable UART, as it's the way Raspberry Pi and RFID sensor will be connected.
-
-Run `sudo nano /boot/config.txt`. At the end of the file append `enable_uart=1` and reboot.
+If given instructions didn't work, try using this tutorial: [link](https://www.circuits.dk/setup-raspberry-pi-3-gpio-uart/).
 
 ### System Service Unit
 
@@ -83,6 +77,8 @@ You can use `mealtracker.service` that is provided in the repostitory or write y
 1. Copy the unit file to `/etc/systemd/system/`
 
 Now the service is accessible over `sudo systemctl` command.
+
+> Remember to stop the service before using `input.py`
 
 #### Usage
 
