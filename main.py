@@ -1,3 +1,4 @@
+import logging
 from os import environ
 
 from common import load_config
@@ -6,6 +7,7 @@ from Handlers import Authenticator, SaveData
 from Reader import Reader, TestReader
 
 load_config()
+logging.basicConfig(level=environ.get('LOGLEVEL', 'INFO'))
 
 if environ.get('ENVIRONMENT') == 'DEVELOPMENT':
     Reader = TestReader
