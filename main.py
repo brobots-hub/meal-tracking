@@ -19,7 +19,7 @@ storage = GoogleSheetsStorage(
     environ.get('SCOPES').split(','),
 )
 
-reader = Reader('/dev/ttyS0')
+reader = Reader('/dev/serial0')
 auth = Authenticator(storage)
 save_data = SaveData(storage)
 
