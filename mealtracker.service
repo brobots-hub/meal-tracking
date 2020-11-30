@@ -1,0 +1,14 @@
+[Unit]
+Description=Meal Tracking System
+After=network.target
+
+[Service]
+ExecStart={{ project_path }}/venv/bin/python {{ project_path }}/main.py
+WorkingDirectory=/home/pi/school-meal-tracking
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User={{ user }}
+
+[Install]
+WantedBy=multi-user.target

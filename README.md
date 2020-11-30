@@ -72,3 +72,26 @@ Run `sudo raspi-config`. Select `Interfacing Options / Serial` then disable `Ser
 You need to enable UART, as it's the way Raspberry Pi and RFID sensor will be connected.
 
 Run `sudo nano /boot/config.txt`. At the end of the file append `enable_uart=1` and reboot.
+
+### System Service Unit
+
+You can use `mealtracker.service` that is provided in the repostitory or write your own unit. If you're using the existing one, you have to:
+
+1. Enter path to your project in specified placed
+1. Enter name of the user you're going to use
+   - On the Raspberry Pi it's most probably `pi` user.
+1. Copy the unit file to `/etc/systemd/system/`
+
+Now the service is accessible over `sudo systemctl` command.
+
+#### Usage
+
+`sudo systemctl start mealtracker.service` - start the service
+
+`sudo systemctl stop mealtracker.service` - stop the service
+
+`sudo systemctl status mealtracker.service` - check status of the service
+
+#### Custom Service
+
+Here is a link to official Raspberry Pi documentation on writing services: [link](https://www.raspberrypi.org/documentation/linux/usage/systemd.md)
