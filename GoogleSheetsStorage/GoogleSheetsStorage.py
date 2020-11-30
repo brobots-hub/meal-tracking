@@ -1,3 +1,4 @@
+import logging
 from os import environ
 
 from google.oauth2 import service_account
@@ -10,7 +11,8 @@ class GoogleSheetsStorage:
         creds = service_account.Credentials.from_service_account_file(
             account_key, scopes=scopes)
 
-        service = build('sheets', 'v4', credentials=creds)
+        service = build('sheets', 'v4', credentials=creds,
+                        cache_discovery=False)
         self._sheet = service.spreadsheets()
         self._document_id = document_id
 
@@ -31,6 +33,7 @@ class GoogleSheetsStorage:
             body=body
         ).execute()
 
+        logging.debug(f'user id updated - {user_id}')
         return True if result.get('updatedRange', False) else False
 
     def _find_user_row_by_name(self, user_name):
@@ -72,6 +75,7 @@ class GoogleSheetsStorage:
             body=body
         ).execute()
 
+        logging.debug(f'user record saved - {data}')
         return True if result.get('updatedRange', False) else False
 
     def _find_user_row_by_id(self, user_id):

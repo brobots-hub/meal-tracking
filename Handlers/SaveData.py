@@ -1,3 +1,5 @@
+import logging
+
 from Handlers.BaseHandler import BaseHandler
 
 
@@ -12,4 +14,5 @@ class SaveData(BaseHandler):
 
     def handle(self, request):
         result = self._save_data(request)
+        logging.debug(f'request saved - {request}')
         super().handle(result)
