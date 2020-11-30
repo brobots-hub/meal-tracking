@@ -26,18 +26,18 @@ class TestReader:
         self._callback = callback
 
     def card_inserted(self, card):
-        r = Request(user_id=card)
-        self._callback(r)
         print(f"card inserted {card}")
 
     def card_removed(self, card):
         print(f"card removed {card}")
+        r = Request(user_id=card)
+        self._callback(r)
 
     def invalid_card(self, card):
         print(f"invalid card {card}")
 
     def start(self):
-        self.card_inserted('1')
+        self.card_removed('1')
 
 
 if __name__ == '__main__':
