@@ -19,7 +19,7 @@ storage = GoogleSheetsStorage(
     environ.get('SCOPES').split(','),
 )
 
-reader = Reader('/dev/serial0')
+reader = Reader('/dev/ttyS0')
 auth = Authenticator(storage)
 save_data = SaveData(storage)
 
@@ -27,4 +27,4 @@ reader.set_card_callback(auth.handle)
 auth.set_next(save_data)
 
 if __name__ == '__main__':
-    reader.start()
+    reader.execute()

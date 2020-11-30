@@ -2,7 +2,11 @@ import rdm6300
 from Request import Request
 
 
-class Reader(rdm6300.BaseReader):
+class Reader(rdm6300.Reader):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.quit_loop = False
+
     def set_card_callback(self, callback):
         self._callback = callback
 
