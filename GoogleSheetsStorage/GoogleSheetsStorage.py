@@ -17,6 +17,12 @@ class GoogleSheetsStorage:
         self._document_id = document_id
 
     def write_user_id(self, user_id, user_name):
+        try:
+            return self._write_user_id(user_id, user_name)
+        except:
+            logging.critical('google sheets request error')
+
+    def _write_user_id(self, user_id, user_name):
         user_row = self._find_user_row_by_name(user_name)
         ids_col = environ.get('USER_ID_COL')
 
